@@ -11,8 +11,8 @@ contract TransferVolume is Hook {
 
     uint256 public totalVolumeTransfered;
     mapping(uint256 => uint256) public totalVolumeTransferedPerDay;
-    mapping(uint256 => mapping(address => uint256)) public volumeTransferedFromPerDayPerUser;
-    mapping(uint256 => mapping(address => uint256)) public volumeTransferedToPerDayPerUser;
+    mapping(uint256 => mapping(address => uint256)) public volumeOutPerDayPerUser;
+    mapping(uint256 => mapping(address => uint256)) public volumeInPerDayPerUser;
 
     constructor(address _erc20) {
         erc20 = IERC20(_erc20);
@@ -27,19 +27,19 @@ contract TransferVolume is Hook {
 
         totalVolumeTransfered += evt.value;
         totalVolumeTransferedPerDay[currentDay] += evt.value;
-        volumeTransferedFromPerDayPerUser[currentDay][evt.from] += evt.value;
-        volumeTransferedToPerDayPerUser[currentDay][evt.to] += evt.value;
+        volumeOutPerDayPerUser[currentDay][evt.from] += evt.value;
+        volumeInPerDayPerUser[currentDay][evt.to] += evt.value;
     }
 
     /// @notice Get the volume transferred per day for a given day range.
-    function getVolumeTransferredPerDay(uint256 startTimestamp, uint256 endTimestamp)
+    function getVolumeTransferred(uint256 startTimestamp, uint256 endTimestamp)
         external
         view
         returns (uint256[] memory)
     {
         // Round down to the nearest day
-        uint256 startDay = startTimestamp / (1 days);
-        uint256 endDay = endTimestamp / (1 days);
+        uint256 startDay = startTimestamp / (60 * 60 * 24);
+        uint256 endDay = endTimestamp / (60 * 60 * 24);
 
         uint256[] memory volumes = new uint256[](startDay - endDay + 1);
         for (uint256 i = startDay; i <= endDay; i++) {
@@ -49,19 +49,19 @@ contract TransferVolume is Hook {
     }
 
     /// @notice Get the volume transferred per day for a given user
-    function getVolumeTransferredPerDayForUser(address user, uint256 startTimestamp, uint256 endTimestamp)
+    function getVolumeTransferred(address user, uint256 startTimestamp, uint256 endTimestamp)
         external
         view
         returns (int256[] memory)
     {
         // Round down to the nearest day
-        uint256 startDay = startTimestamp / (1 days);
-        uint256 endDay = endTimestamp / (1 days);
+        uint256 startDay = startTimestamp / (60 * 60 * 24);
+        uint256 endDay = endTimestamp / (60 * 60 * 24);
 
         int256[] memory volumes = new int256[](startDay - endDay + 1);
         for (uint256 i = startDay; i <= endDay; i++) {
-            uint256 volumeOut = volumeTransferedFromPerDayPerUser[i][user];
-            uint256 volumeIn = volumeTransferedToPerDayPerUser[i][user];
+            uint256 volumeOut = volumeOutPerDayPerUser[i][user];
+            uint256 volumeIn = volumeInPerDayPerUser[i][user];
             volumes[i - startDay] = int256(volumeIn) - int256(volumeOut);
         }
         return volumes;
