@@ -33,14 +33,14 @@ contract Aerodrome is Hook {
         points = Points(pointsAddress);
 
         // Registering call hooks
-        vm.registerCallHook(AERODROME_ROUTER, SIG_SWAP_EXACT_ETH_FOR_TOKENS, "onSwapExactETHForTokens");
-        vm.registerCallHook(AERODROME_ROUTER, SIG_SWAP_EXACT_TOKENS_FOR_ETH, "onSwapExactTokensForETH");
-        vm.registerCallHook(AERODROME_ROUTER, SIG_ADD_LIQUIDITY, "onAddLiquidity");
-        vm.registerCallHook(AERODROME_ROUTER, SIG_ADD_LIQUIDITY_ETH, "onAddLiquidityETH");
+        vm.onCall(AERODROME_ROUTER, SIG_SWAP_EXACT_ETH_FOR_TOKENS, "onSwapExactETHForTokens()");
+        vm.onCall(AERODROME_ROUTER, SIG_SWAP_EXACT_TOKENS_FOR_ETH, "onSwapExactTokensForETH()");
+        vm.onCall(AERODROME_ROUTER, SIG_ADD_LIQUIDITY, "onAddLiquidity()");
+        vm.onCall(AERODROME_ROUTER, SIG_ADD_LIQUIDITY_ETH, "onAddLiquidityETH()");
 
         // Registering event hooks
-        vm.registerEventHook(AERODROME_VOTING_ESCROW, EVT_LOCK_PERMANENT, "onLockPermanent");
-        vm.registerEventHook(AERODROME_VOTER, EVT_VOTED, "onVoted");
+        vm.onEvent(AERODROME_VOTING_ESCROW, EVT_LOCK_PERMANENT, "onLockPermanent()");
+        vm.onEvent(AERODROME_VOTER, EVT_VOTED, "onVoted()");
     }
 
     /// @notice Hook for a `swapExactETHForTokens` call.

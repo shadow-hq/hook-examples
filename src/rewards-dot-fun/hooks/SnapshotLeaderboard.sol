@@ -11,8 +11,8 @@ contract SnapshotLeaderboard is Hook {
     constructor(address pointsAddress) {
         points = Points(pointsAddress);
 
-        // Registering cron hook. This will run the `snapshot()` function every day at midnight UTC.
-        vm.registerCronHook("0 0 * * *", "snapshot()");
+        // Registering a scheduled hook. This will run the `snapshot()` function every day at midnight UTC.
+        vm.onSchedule("0 0 * * *", "snapshot()");
     }
 
     /// @notice Hook to snapshot the leaderboard at midnight UTC every day.

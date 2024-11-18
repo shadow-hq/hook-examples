@@ -27,11 +27,11 @@ contract Basepaint is Hook {
         points = Points(pointsAddress);
 
         // Registering event hooks
-        vm.registerEventHook(BASEPAINT, EVT_PAINTED, "onPainted");
+        vm.onEvent(BASEPAINT, EVT_PAINTED, "onPainted()");
 
         // Registering call hooks
-        vm.registerCallHook(BASEPAINT_REWARDS, SIG_MINT, "onMint");
-        vm.registerCallHook(BASEPAINT_ANIMATION, SIG_ANIMATED_MINT, "onAnimatedMint");
+        vm.onCall(BASEPAINT_REWARDS, SIG_MINT, "onMint()");
+        vm.onCall(BASEPAINT_ANIMATION, SIG_ANIMATED_MINT, "onAnimatedMint()");
     }
 
     /// @notice Hook for the `Painted` event.

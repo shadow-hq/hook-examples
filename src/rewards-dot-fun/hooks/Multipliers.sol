@@ -10,8 +10,8 @@ contract Multipliers is Hook {
     // Constants
     address private constant REWARDS = 0xC6f3D10562073De863dA3562649973E8706cF981;
 
-    string private constant SIG_INCREASE_MULTIPLIER = "function increaseMultiplier(address to, string calldata message)";
-    string private constant SIG_DECREASE_MULTIPLIER = "function decreaseMultiplier(address to, string calldata message)";
+    string private constant SIG_INCREASE_MULTIPLIER = "increaseMultiplier(address to, string calldata message)";
+    string private constant SIG_DECREASE_MULTIPLIER = "decreaseMultiplier(address to, string calldata message)";
 
     // State
     Points private immutable points;
@@ -20,8 +20,8 @@ contract Multipliers is Hook {
         points = Points(pointsAddress);
 
         // Registering call hooks
-        vm.registerCallHook(REWARDS, SIG_INCREASE_MULTIPLIER, "onIncreaseMultiplier");
-        vm.registerCallHook(REWARDS, SIG_DECREASE_MULTIPLIER, "onDecreaseMultiplier");
+        vm.onCall(REWARDS, SIG_INCREASE_MULTIPLIER, "onIncreaseMultiplier()");
+        vm.onCall(REWARDS, SIG_DECREASE_MULTIPLIER, "onDecreaseMultiplier()");
     }
 
     /// @notice Hook for the `increaseMultiplier` call.

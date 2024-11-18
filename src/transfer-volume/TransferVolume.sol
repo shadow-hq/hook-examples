@@ -18,7 +18,7 @@ contract TransferVolume is Hook {
         erc20 = IERC20(_erc20);
 
         // Register hook
-        vm.registerEventHook(_erc20, "Transfer(address,address,uint256)", "onTransfer");
+        vm.onEvent(_erc20, "Transfer(address,address,uint256)", "onTransfer()");
     }
 
     /// @notice Hooks on the Transfer event of an ERC20 token to track total transfer volume.
