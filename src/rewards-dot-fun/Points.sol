@@ -14,6 +14,8 @@ contract Points {
 
     // Events
     event PointsIncreased(Protocol protocol, string actionType, address user, uint256 amount);
+    event MultiplierIncreased(address from, address to, uint256 oldMultiplier, uint256 newMultiplier);
+    event MultiplierDecreased(address from, address to, uint256 oldMultiplier, uint256 newMultiplier);
 
     // State
     mapping(Protocol => mapping(uint256 => mapping(address => uint256))) public rawPoints;
@@ -77,14 +79,20 @@ contract Points {
         rawPoints[protocol][period][user] += amount;
     }
 
-    function increaseMultiplier(address user) external {
+    function increaseMultiplier(address from, address to) external {
         uint256 period = getCurrentPeriod();
-        multiplierCount[period][user]++;
+        uint256 oldMultiplier = calculateMultiplier(period, to);
+        multiplierCount[period][to]++;
+        uint256 newMultiplier = calculateMultiplier(period, to);
+        emit MultiplierIncreased(from, to, oldMultiplier, newMultiplier);
     }
 
-    function decreaseMultiplier(address user) external {
+    function decreaseMultiplier(address from, address to) external {
         uint256 period = getCurrentPeriod();
-        multiplierCount[period][user]--;
+        uint256 oldMultiplier = calculateMultiplier(period, to);
+        multiplierCount[period][to]--;
+        uint256 newMultiplier = calculateMultiplier(period, to);
+        emit MultiplierDecreased(from, to, oldMultiplier, newMultiplier);
     }
 
     function getPoints(Protocol protocol, uint256 period, address user) public view returns (uint256) {
