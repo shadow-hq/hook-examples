@@ -5,6 +5,7 @@ import "../../../lib/shadow-std/Hook.sol";
 import "../generated/GeneratedMultipliers.sol";
 import "../Points.sol";
 
+/// @notice Hooks for multiplier activity tracking.
 contract Multipliers is Hook {
     // Constants
     address private constant REWARDS = 0xC6f3D10562073De863dA3562649973E8706cF981;

@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.13;
 
+/// @notice Main contract that contains state and logic to track points for various protocol activities.
 contract Points {
     // Types
     enum Protocol {

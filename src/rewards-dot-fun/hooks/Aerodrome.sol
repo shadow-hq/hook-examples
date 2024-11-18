@@ -5,6 +5,7 @@ import "../../../lib/shadow-std/Hook.sol";
 import "../generated/GeneratedAerodrome.sol";
 import "../Points.sol";
 
+/// @notice Hooks for Aerodrome activity tracking.
 contract Aerodrome is Hook {
     // Constants
     address private constant AERODROME_ROUTER = 0xcF77a3Ba9A5CA399B7c97c74d54e5b1Beb874E43;

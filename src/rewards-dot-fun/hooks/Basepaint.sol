@@ -5,6 +5,7 @@ import "../../../lib/shadow-std/Hook.sol";
 import "../generated/GeneratedBasepaint.sol";
 import "../Points.sol";
 
+/// @notice Hooks for Basepaint activity tracking.
 contract Basepaint is Hook {
     // Constants
     address private constant BASEPAINT = 0xBa5e05cb26b78eDa3A2f8e3b3814726305dcAc83;

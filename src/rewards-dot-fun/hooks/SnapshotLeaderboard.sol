@@ -4,6 +4,7 @@ pragma solidity ^0.8.13;
 import "../../../lib/shadow-std/Hook.sol";
 import "../Points.sol";
 
+/// @notice Hook to snapshot the leaderboard at midnight UTC every day.
 contract SnapshotLeaderboard is Hook {
     Points private points;
 
