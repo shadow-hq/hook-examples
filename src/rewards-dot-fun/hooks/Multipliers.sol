@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.13;
 
-import "../../../lib/shadow-std/Hook.sol";
-import "../generated/GeneratedMultipliers.sol";
+import "@shadow-std/Hook.sol";
+import "@generated/rewards-dot-fun/GeneratedMultipliers.sol";
 import "../Points.sol";
 
 /// @notice Hooks for multiplier activity tracking.

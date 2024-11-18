@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.13;
 
-import "../../lib/shadow-std/Hook.sol";
-import "./GeneratedTransferVolume.sol";
+import "@shadow-std/Hook.sol";
+import "@generated/transfer-volume/GeneratedTransferVolume.sol";
 
 /// @notice Hook contract to track the volume of transfers for an ERC20 token.
 contract TransferVolume is Hook {

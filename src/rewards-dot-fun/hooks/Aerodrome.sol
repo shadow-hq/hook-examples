@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.13;
 
-import "../../../lib/shadow-std/Hook.sol";
-import "../generated/GeneratedAerodrome.sol";
+import "@shadow-std/Hook.sol";
+import "@generated/rewards-dot-fun/GeneratedAerodrome.sol";
 import "../Points.sol";
 
 /// @notice Hooks for Aerodrome activity tracking.

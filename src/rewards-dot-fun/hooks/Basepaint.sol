@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.13;
 
-import "../../../lib/shadow-std/Hook.sol";
-import "../generated/GeneratedBasepaint.sol";
+import "@shadow-std/Hook.sol";
+import "@generated/rewards-dot-fun/GeneratedBasepaint.sol";
 import "../Points.sol";
 
 /// @notice Hooks for Basepaint activity tracking.

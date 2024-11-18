@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.13;
 
-import "../../../lib/shadow-std/Hook.sol";
+import "@shadow-std/Hook.sol";
 import "../Points.sol";
 
 /// @notice Hook to snapshot the leaderboard at midnight UTC every day.
