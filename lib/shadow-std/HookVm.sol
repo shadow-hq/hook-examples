@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.13;
 
-interface Vm {
+interface HookVm {
     struct Transaction {
         /// @notice The address of the sender.
         address from;
@@ -14,6 +14,12 @@ interface Vm {
         /// @notice The call data of the transaction.
         bytes data;
     }
+
+    /// @notice Registers a hook for a given event or function signature.
+    /// @param addr The address of the contract.
+    /// @param eventOrFunctionSignature The signature of the event or function to hook. e.g. `Event(address,uint256)` or `functionName(address,uint256)`
+    /// @param hookFunctionSignature The signature of the hook function. e.g. `onEvent(bytes,bytes)` or `onFunction(bytes,bytes)`
+    function on(address addr, string memory eventOrFunctionSignature, string memory hookFunctionSignature) external;
 
     /// @notice Registers an event hook for all contracts. The hook function will be called for all events with the given signature.
     /// @param eventSignature The signature of the event to hook. e.g. `Event(address,uint256)`

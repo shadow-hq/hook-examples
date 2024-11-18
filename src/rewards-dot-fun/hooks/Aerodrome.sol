@@ -12,18 +12,18 @@ contract Aerodrome is Hook {
     address private constant AERODROME_VOTING_ESCROW = 0xeBf418Fe2512e7E6bd9b87a8F0f294aCDC67e6B4;
     address private constant AERODROME_VOTER = 0x16613524e02ad97eDfeF371bC883F2F5d6C480A5;
 
-    string private constant SIG_SWAP_EXACT_ETH_FOR_TOKENS =
-        "swapExactETHForTokens(uint256 amountOutMin, Route[] routes, address to, uint256 deadline)";
-    string private constant SIG_SWAP_EXACT_TOKENS_FOR_ETH =
-        "swapExactTokensForETH(uint256 amountIn, uint256 amountOutMin, Route[] routes, address to, uint256 deadline)";
-    string private constant SIG_ADD_LIQUIDITY =
-        "addLiquidity(address tokenA, address tokenB, bool stable, uint256 amountADesired, uint256 amountBDesired, uint256 amountAMin, uint256 amountBMin, address to, uint256 deadline)";
-    string private constant SIG_ADD_LIQUIDITY_ETH =
-        "addLiquidityETH(address token, bool stable, uint256 amountTokenDesired, uint256 amountTokenMin, uint256 amountETHMin, address to, uint256 deadline)";
+    string private constant FN_SWAP_EXACT_ETH_FOR_TOKENS =
+        "function swapExactETHForTokens(uint256 amountOutMin, Route[] routes, address to, uint256 deadline)";
+    string private constant FN_SWAP_EXACT_TOKENS_FOR_ETH =
+        "function swapExactTokensForETH(uint256 amountIn, uint256 amountOutMin, Route[] routes, address to, uint256 deadline)";
+    string private constant FN_ADD_LIQUIDITY =
+        "function addLiquidity(address tokenA, address tokenB, bool stable, uint256 amountADesired, uint256 amountBDesired, uint256 amountAMin, uint256 amountBMin, address to, uint256 deadline)";
+    string private constant FN_ADD_LIQUIDITY_ETH =
+        "function addLiquidityETH(address token, bool stable, uint256 amountTokenDesired, uint256 amountTokenMin, uint256 amountETHMin, address to, uint256 deadline)";
     string private constant EVT_LOCK_PERMANENT =
-        "LockPermanent(address indexed _owner, uint256 indexed _tokenId, uint256 amount, uint256 _ts)";
+        "event LockPermanent(address indexed _owner, uint256 indexed _tokenId, uint256 amount, uint256 _ts)";
     string private constant EVT_VOTED =
-        "Voted(address indexed voter, address indexed pool, uint256 indexed tokenId, uint256 weight, uint256 totalWeight, uint256 timestamp)";
+        "event Voted(address indexed voter, address indexed pool, uint256 indexed tokenId, uint256 weight, uint256 totalWeight, uint256 timestamp)";
 
     // State
     Points private immutable points;
@@ -33,14 +33,14 @@ contract Aerodrome is Hook {
         points = Points(pointsAddress);
 
         // Registering call hooks
-        vm.onCall(AERODROME_ROUTER, SIG_SWAP_EXACT_ETH_FOR_TOKENS, "onSwapExactETHForTokens()");
-        vm.onCall(AERODROME_ROUTER, SIG_SWAP_EXACT_TOKENS_FOR_ETH, "onSwapExactTokensForETH()");
-        vm.onCall(AERODROME_ROUTER, SIG_ADD_LIQUIDITY, "onAddLiquidity()");
-        vm.onCall(AERODROME_ROUTER, SIG_ADD_LIQUIDITY_ETH, "onAddLiquidityETH()");
+        hook.on(AERODROME_ROUTER, FN_SWAP_EXACT_ETH_FOR_TOKENS, "onSwapExactETHForTokens");
+        hook.on(AERODROME_ROUTER, FN_SWAP_EXACT_TOKENS_FOR_ETH, "onSwapExactTokensForETH");
+        hook.on(AERODROME_ROUTER, FN_ADD_LIQUIDITY, "onAddLiquidity");
+        hook.on(AERODROME_ROUTER, FN_ADD_LIQUIDITY_ETH, "onAddLiquidityETH");
 
         // Registering event hooks
-        vm.onEvent(AERODROME_VOTING_ESCROW, EVT_LOCK_PERMANENT, "onLockPermanent()");
-        vm.onEvent(AERODROME_VOTER, EVT_VOTED, "onVoted()");
+        hook.on(AERODROME_VOTING_ESCROW, EVT_LOCK_PERMANENT, "onLockPermanent");
+        hook.on(AERODROME_VOTER, EVT_VOTED, "onVoted");
     }
 
     /// @notice Hook for a `swapExactETHForTokens` call.

@@ -12,12 +12,13 @@ contract Basepaint is Hook {
     address private constant BASEPAINT_REWARDS = 0xaff1A9E200000061fC3283455d8B0C7e3e728161;
     address private constant BASEPAINT_ANIMATION = 0xC59F475122e914aFCf31C0a9E0A2274666135e4E;
 
-    string private constant EVT_PAINTED = "Painted(uint256 indexed day, uint256 tokenId, address author, bytes pixels)";
+    string private constant EVT_PAINTED =
+        "event Painted(uint256 indexed day, uint256 tokenId, address author, bytes pixels)";
 
-    string private constant SIG_MINT =
-        "mint(uint256 tokenId, address sendMintsTo, uint256 count, address sendRewardsTo)";
-    string private constant SIG_ANIMATED_MINT =
-        "onERC1155Received(address, address from, uint256 id, uint256 value, bytes)";
+    string private constant FN_MINT =
+        "function mint(uint256 tokenId, address sendMintsTo, uint256 count, address sendRewardsTo)";
+    string private constant FN_ANIMATED_MINT =
+        "function onERC1155Received(address, address from, uint256 id, uint256 value, bytes)";
 
     // State
     Points private immutable points;
@@ -26,12 +27,12 @@ contract Basepaint is Hook {
     constructor(address pointsAddress) {
         points = Points(pointsAddress);
 
-        // Registering event hooks
-        vm.onEvent(BASEPAINT, EVT_PAINTED, "onPainted()");
+        // Event hooks
+        hook.on(BASEPAINT, EVT_PAINTED, "onPainted");
 
-        // Registering call hooks
-        vm.onCall(BASEPAINT_REWARDS, SIG_MINT, "onMint()");
-        vm.onCall(BASEPAINT_ANIMATION, SIG_ANIMATED_MINT, "onAnimatedMint()");
+        // Call hooks
+        hook.on(BASEPAINT_REWARDS, FN_MINT, "onMint");
+        hook.on(BASEPAINT_ANIMATION, FN_ANIMATED_MINT, "onAnimatedMint");
     }
 
     /// @notice Hook for the `Painted` event.
