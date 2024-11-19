@@ -24,6 +24,10 @@ Registers a hook for a given event or trace call.
 function on(address addr, string memory eventOrFunctionSignature, string memory hookFunctionSignature) external;
 ```
 
+Example usage:
+* `on(WETH, "event Transfer(address,address,uint256)", "doThisThing")`
+* `on(WETH, "function transfer(address,uint256)", "doThisThing")`
+
 ### `onEvent`
 Registers a hook to handle an event emitted by a specific contract.
 ```solidity
@@ -34,6 +38,9 @@ Registers a hook to handle an event emitted by a specific contract.
 function onEvent(address addr, string memory eventSignature, string memory hookFunctionSignature) external;
 ```
 
+Example usage:
+* `onEvent(WETH, "event Transfer(address,address,uint256)", "doThisThing")`
+
 Registers a hook to handle an event emitted by any contract.
 
 ```solidity
@@ -42,6 +49,9 @@ Registers a hook to handle an event emitted by any contract.
 /// @param hookFunctionSignature The signature of the hook function. e.g. `onEvent`
 function onEvent(string memory eventSignature, string memory hookFunctionSignature) external;
 ```
+
+Example usage:
+* `onEvent("event Transfer(address,address,uint256)", "doThisThing")`
 
 ### `onCall`
 Registers a hook to handle trace calls to a specific contract.
@@ -54,6 +64,9 @@ Registers a hook to handle trace calls to a specific contract.
 function onCall(address addr, string memory functionSignature, string memory hookFunctionSignature) external;
 ```
 
+Example usage:
+* `onCall(WETH, "function transfer(address,uint256)", "doThisThing")`
+
 ### `onSchedule`
 Registers a hook to be run on a cron schedule.
 
@@ -63,3 +76,6 @@ Registers a hook to be run on a cron schedule.
 /// @param hookFunctionSignature The signature of the hook function. e.g. `onCron`
 function onSchedule(string memory cronExpression, string memory hookFunctionSignature) external;
 ```
+
+Example usage:
+* `onSchedule("0 0 * * *", "doThisThing")`
