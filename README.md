@@ -1,66 +1,12 @@
-## Foundry
+## Shadow Hook Examples
+This repository is a collection of shadow hook examples that demonstrates common patterns and may serve as an
+inspiration for new developers.
 
-**Foundry is a blazing fast, portable and modular toolkit for Ethereum application development written in Rust.**
+## Overview
 
-Foundry consists of:
-
--   **Forge**: Ethereum testing framework (like Truffle, Hardhat and DappTools).
--   **Cast**: Swiss army knife for interacting with EVM smart contracts, sending transactions and getting chain data.
--   **Anvil**: Local Ethereum node, akin to Ganache, Hardhat Network.
--   **Chisel**: Fast, utilitarian, and verbose solidity REPL.
-
-## Documentation
-
-https://book.getfoundry.sh/
-
-## Usage
-
-### Build
-
-```shell
-$ forge build
-```
-
-### Test
-
-```shell
-$ forge test
-```
-
-### Format
-
-```shell
-$ forge fmt
-```
-
-### Gas Snapshots
-
-```shell
-$ forge snapshot
-```
-
-### Anvil
-
-```shell
-$ anvil
-```
-
-### Deploy
-
-```shell
-$ forge script script/Counter.s.sol:CounterScript --rpc-url <your_rpc_url> --private-key <your_private_key>
-```
-
-### Cast
-
-```shell
-$ cast <subcommand>
-```
-
-### Help
-
-```shell
-$ forge --help
-$ anvil --help
-$ cast --help
-```
+| Example | Description |
+|---------|-------------|
+| [rewards-dot-fun](./src/rewards-dot-fun) | Contracts for [rewards.fun]. Tracks points, multipliers and leaderboards based on live Base activity across multiple protocols |
+| [transfer-volume](./src/transfer-volume) | Hook contract to track the volume of transfers for an ERC20 token |
+| [wash-trades](./src/wash-trades) | Hook contract to track NFT wash trades. Uses hildobby's wash trade detection methods described [here](https://community.dune.com/blog/nft-wash-trading-on-ethereum) |
+| [week-over-week-balances](./src/week-over-week-balances) | Hook contract to track the balances of users over time |
