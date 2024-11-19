@@ -3,7 +3,7 @@ pragma solidity ^0.8.13;
 
 import "@shadow-std/Hook.sol";
 import "@generated/Basepaint.gen.sol";
-import "../Points.sol";
+import "./Points.sol";
 
 /// @notice Hooks for Basepaint activity tracking.
 contract Basepaint is Hook {
