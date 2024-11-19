@@ -15,6 +15,10 @@ interface HookVm {
         bytes data;
     }
 
+    event HookRegistered(
+        address indexed addr, string indexed eventOrFunctionSignature, string indexed hookFunctionSignature
+    );
+
     /// @notice Registers a hook for a given event or function signature.
     /// @param addr The address of the contract.
     /// @param eventOrFunctionSignature The signature of the event or function to hook. e.g. `Event(address,uint256)` or `functionName(address,uint256)`
