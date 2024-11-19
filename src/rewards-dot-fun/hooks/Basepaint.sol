@@ -2,7 +2,7 @@
 pragma solidity ^0.8.13;
 
 import "@shadow-std/Hook.sol";
-import "@generated/rewards-dot-fun/GeneratedBasepaint.sol";
+import "@generated/Basepaint.gen.sol";
 import "../Points.sol";
 
 /// @notice Hooks for Basepaint activity tracking.
@@ -36,7 +36,7 @@ contract Basepaint is Hook {
     }
 
     /// @notice Hook for the `Painted` event.
-    function onPainted(GeneratedBasepaint.Painted memory evt) external {
+    function onPainted(BasepaintGenerated.Painted memory evt) external {
         uint256 numPixels = evt.pixels.length / 3;
 
         // Only give points for paintings with more than 99 pixels.
@@ -56,15 +56,15 @@ contract Basepaint is Hook {
     }
 
     /// @notice Hook for the `mint` call.
-    function onMint(GeneratedBasepaint.MintParams memory params) external {
+    function onMint(BasepaintGenerated.MintParams memory params) external {
         points.increasePoints(Points.Protocol.BASEPAINT, params.sendMintsTo, params.count * 3000);
         emit Points.PointsIncreased(Points.Protocol.BASEPAINT, "mint", params.sendMintsTo, params.count * 3000);
     }
 
     /// @notice Hook for the `onERC1155Received` call.
     function onAnimatedMint(
-        GeneratedBasepaint.OnERC1155ReceivedParams memory params,
-        GeneratedBasepaint.OnERC1155ReceivedResult memory /* result */
+        BasepaintGenerated.OnERC1155ReceivedParams memory params,
+        BasepaintGenerated.OnERC1155ReceivedResult memory /* result */
     ) external {
         points.increasePoints(Points.Protocol.BASEPAINT, params.from, 1000);
         emit Points.PointsIncreased(Points.Protocol.BASEPAINT, "animatedMint", params.from, 1000);

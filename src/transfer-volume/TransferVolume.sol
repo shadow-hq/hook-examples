@@ -2,7 +2,7 @@
 pragma solidity ^0.8.13;
 
 import "@shadow-std/Hook.sol";
-import "@generated/transfer-volume/GeneratedTransferVolume.sol";
+import "@generated/TransferVolume.gen.sol";
 
 /// @notice Hook contract to track the volume of transfers for an ERC20 token.
 contract TransferVolume is Hook {
@@ -22,7 +22,7 @@ contract TransferVolume is Hook {
     }
 
     /// @notice Hooks on the Transfer event of an ERC20 token to track total transfer volume.
-    function onTransfer(GeneratedTransferVolume.Transfer memory evt) external {
+    function onTransfer(TransferVolumeGenerated.Transfer memory evt) external {
         uint256 currentDay = block.timestamp / (1 days);
 
         totalVolumeTransfered += evt.value;

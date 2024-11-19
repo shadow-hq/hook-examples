@@ -2,7 +2,7 @@
 pragma solidity ^0.8.13;
 
 import "@shadow-std/Hook.sol";
-import "@generated/rewards-dot-fun/GeneratedAerodrome.sol";
+import "@generated/Aerodrome.gen.sol";
 import "../Points.sol";
 
 /// @notice Hooks for Aerodrome activity tracking.
@@ -45,16 +45,16 @@ contract Aerodrome is Hook {
 
     /// @notice Hook for a `swapExactETHForTokens` call.
     function onSwapExactETHForTokens(
-        GeneratedAerodrome.SwapExactETHForTokensParams memory params,
-        GeneratedAerodrome.SwapExactETHForTokensResult memory /* result */
+        AerodromeGenerated.SwapExactETHForTokensParams memory params,
+        AerodromeGenerated.SwapExactETHForTokensResult memory /* result */
     ) external {
         _onSwap(params.to);
     }
 
     /// @notice Hook for the `swapExactTokensForETH` call.
     function onSwapExactTokensForETH(
-        GeneratedAerodrome.SwapExactTokensForETHParams memory params,
-        GeneratedAerodrome.SwapExactTokensForETHResult memory /* result */
+        AerodromeGenerated.SwapExactTokensForETHParams memory params,
+        AerodromeGenerated.SwapExactTokensForETHResult memory /* result */
     ) external {
         _onSwap(params.to);
     }
@@ -77,8 +77,8 @@ contract Aerodrome is Hook {
 
     /// @notice Hook for the `addLiquidity` call.
     function onAddLiquidity(
-        GeneratedAerodrome.AddLiquidityParams memory params,
-        GeneratedAerodrome.AddLiquidityResult memory /* result */
+        AerodromeGenerated.AddLiquidityParams memory params,
+        AerodromeGenerated.AddLiquidityResult memory /* result */
     ) external {
         points.increasePoints(Points.Protocol.AERODROME, params.to, 2);
         emit Points.PointsIncreased(Points.Protocol.AERODROME, "deposit", params.to, 2);
@@ -86,21 +86,21 @@ contract Aerodrome is Hook {
 
     /// @notice Hook for the `addLiquidityETH` call.
     function onAddLiquidityETH(
-        GeneratedAerodrome.AddLiquidityETHParams memory params,
-        GeneratedAerodrome.AddLiquidityResult memory /* result */
+        AerodromeGenerated.AddLiquidityETHParams memory params,
+        AerodromeGenerated.AddLiquidityResult memory /* result */
     ) external {
         points.increasePoints(Points.Protocol.AERODROME, params.to, 2);
         emit Points.PointsIncreased(Points.Protocol.AERODROME, "deposit", params.to, 2);
     }
 
     /// @notice Hook for the `LockPermanent` event.
-    function onLockPermanent(GeneratedAerodrome.LockPermanent memory evt) external {
+    function onLockPermanent(AerodromeGenerated.LockPermanent memory evt) external {
         points.increasePoints(Points.Protocol.AERODROME, evt.owner, 100);
         emit Points.PointsIncreased(Points.Protocol.AERODROME, "lock", evt.owner, 100);
     }
 
     /// @notice Hook for the `Voted` event.
-    function onVoted(GeneratedAerodrome.Voted memory evt) external {
+    function onVoted(AerodromeGenerated.Voted memory evt) external {
         points.increasePoints(Points.Protocol.AERODROME, evt.voter, 10);
         emit Points.PointsIncreased(Points.Protocol.AERODROME, "vote", evt.voter, 10);
     }

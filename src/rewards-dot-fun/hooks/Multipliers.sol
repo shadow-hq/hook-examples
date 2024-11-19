@@ -2,7 +2,7 @@
 pragma solidity ^0.8.13;
 
 import "@shadow-std/Hook.sol";
-import "@generated/rewards-dot-fun/GeneratedMultipliers.sol";
+import "@generated/Multipliers.gen.sol";
 import "../Points.sol";
 
 /// @notice Hooks for multiplier activity tracking.
@@ -22,14 +22,14 @@ contract Multipliers is Hook {
     }
 
     /// @notice Hook for the `increaseMultiplier` call.
-    function onIncreaseMultiplier(GeneratedMultipliers.IncreaseMultiplierParams memory params) external {
+    function onIncreaseMultiplier(MultipliersGenerated.IncreaseMultiplierParams memory params) external {
         // Get the original transaction sender
         HookVm.Transaction memory transaction = hook.transaction();
         points.increaseMultiplier(transaction.from, params.to);
     }
 
     /// @notice Hook for the `decreaseMultiplier` call.
-    function onDecreaseMultiplier(GeneratedMultipliers.DecreaseMultiplierParams memory params) external {
+    function onDecreaseMultiplier(MultipliersGenerated.DecreaseMultiplierParams memory params) external {
         // Get the original transaction sender
         HookVm.Transaction memory transaction = hook.transaction();
         points.decreaseMultiplier(transaction.from, params.to);
