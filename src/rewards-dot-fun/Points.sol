@@ -44,22 +44,26 @@ contract Points {
 
     function calculateLeaderboard(Protocol protocol, uint256 period) public view returns (address[3] memory) {
         address first = address(0);
+        uint256 firstPoints = 0;
         address second = address(0);
+        uint256 secondPoints = 0;
         address third = address(0);
+        uint256 thirdPoints = 0;
 
         address[] storage arr = participants[protocol][period];
         for (uint256 i = 0; i < arr.length; i++) {
-            address current = arr[i];
+            address addr = arr[i];
+            uint256 addrPoints = getPoints(protocol, period, addr);
 
-            if (current > first) {
+            if (addrPoints > firstPoints) {
                 third = second;
                 second = first;
-                first = current;
-            } else if (current > second) {
+                first = addr;
+            } else if (addrPoints > secondPoints) {
                 third = second;
-                second = current;
-            } else if (current > third) {
-                third = current;
+                second = addr;
+            } else if (addrPoints > thirdPoints) {
+                third = addr;
             }
         }
 
